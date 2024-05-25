@@ -1,0 +1,18 @@
+<div class="bg-white p-6 rounded-lg shadow-lg">
+    <div class="mb-4">
+        <img class="rounded-lg w-full object-cover" style="height: 300px;" src="{{ url_for('static', filename=reservation.photo) }}" alt="Image de la voiture">
+    </div>
+    <h3 class="text-2xl font-semibold mb-4">{{ reservation.voiture_nom }}</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <p class="text-gray-700"><strong>Marque:</strong> {{ reservation.voiture_marque }}</p>
+            <p class="text-gray-700"><strong>Prix:</strong> ${{ reservation.voiture_prix }}</p>
+            <p class="text-gray-700"><strong>Nom du client:</strong> {{ reservation.client_nom }} {{ reservation.client_prenom }}</p>
+        </div>
+        <div>
+            <p class="text-gray-700"><strong>Début de réservation:</strong> {{ reservation.date_debut_reserv }}</p>
+            <p class="text-gray-700"><strong>Fin de réservation:</strong> {{ reservation.date_fin_reserv }}</p>
+            <p class="text-gray-700"><strong>État de réservation:</strong> {{ reservation.statut }}</p>
+        </div>
+    </div>
+</div>

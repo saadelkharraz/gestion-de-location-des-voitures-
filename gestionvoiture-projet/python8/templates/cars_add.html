@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD CARS</title>
+    <!-- Tailwind CSS Link -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.11/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.5.2/collection/components/icon/icon.min.css">
+</head>
+
+<body class="bg-gradient-to-r from-blue-500 to-blue-300 min-h-screen text-gray-800 flex">
+    <!-- Sidebar navigation -->
+   <div class="flex bg-gradient-to-r from-gray-300 via-white to-gray-300 min-h-screen">
+        <!-- Sidebar navigation -->
+        <div class="w-1/4 h-screen bg-gradient-to-r from-gray-500  to-gray-300  p-6 shadow-lg flex flex-col justify-between">
+            <ul class="space-y-10">
+                <li class="text-3xl mb-12">
+                    <a href="#" class="flex items-center text-gray-800 font-bold">
+                        <ion-icon name="car-sport-outline" class="text-4xl mr-3"></ion-icon>
+                        <span>KRILIYA</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('manager_dash') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="grid-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('liste_reservations') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="document-text-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Reservations</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('voitures_encours_reservation') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="checkmark-circle-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Ongoing Rentals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/voitures" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="car-sport-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Cars</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('show_historique') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="time-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/clients" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="people-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Clients</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('update_password') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="lock-closed-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="log-out-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Log Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    <!-- Main content area -->
+    <div class="flex-1 p-10">
+        <h1 class="text-4xl font-bold text-gray-700 mb-10">Add New Car</h1>
+        <div class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+            <form id="add-voiture-form" action="/voitures/add" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div class="text-center mb-6">
+                    <div class="inline-block relative">
+                        <img src="{{ url_for('static', filename='assets/imgs/img1.jpg') }}" alt="" class="w-32 h-32 rounded-full border-4 border-gray-200 object-cover profile-pic">
+                        <input type="file" name="photo" id="profile" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <input type="text" name="nom" id="nom" value="{{ voiture.Nom }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Nom" required>
+                    </div>
+                    <div class="relative">
+                        <input type="text" name="marque" id="marque" value="{{ voiture.Marque }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Marque" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <input type="text" name="matricule" id="matricule" value="{{ voiture.Matricule }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Matricule" required>
+                    </div>
+                    <div class="relative">
+                        <input type="number" name="prix" id="prix" min="0" value="{{ voiture.prix }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Prix par jour" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <input type="date" name="date_debut" id="date_debut" value="{{ voiture.date_dispo_debut }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Début de disponibilité" required>
+                    </div>
+                    <div class="relative">
+                        <input type="date" name="date_fin" id="date_fin" value="{{ voiture.date_dispo_fin }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Fin de disponibilité" required>
+                    </div>
+                </div>
+
+                <input type="hidden" name="statut" id="statut" value="disponible">
+
+                <div class="flex items-center justify-end">
+                    <button type="submit" class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-700">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ionicons Script for Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.0/dist/ionicons.js"></script>
+    <script>
+        const imgDiv = document.querySelector('.profile-box');
+        const img = document.querySelector('.profile-pic');
+        const file = document.querySelector('#profile');
+        const uploadBtn = document.querySelector('#uploadBtn');
+
+        imgDiv.addEventListener('mouseenter', function() {
+            uploadBtn.style.display = "block";
+        });
+
+        imgDiv.addEventListener('mouseleave', function() {
+            uploadBtn.style.display = "none";
+        });
+
+        file.addEventListener('change', function() {
+            const choosedFile = this.files[0];
+
+            if (choosedFile) {
+                const reader = new FileReader();
+
+                reader.addEventListener('load', function() {
+                    img.setAttribute('src', reader.result);
+                });
+
+                reader.readAsDataURL(choosedFile);
+            }
+        });
+    </script>
+</body>
+
+</html>

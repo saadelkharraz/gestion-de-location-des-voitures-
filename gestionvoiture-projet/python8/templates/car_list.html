@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars </title>
+    <!-- ======= Styles ====== -->
+    <!-- Stylesheet pour DataTables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style4.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/all.min.css') }}">
+    <style>
+        .custom-button {
+            display: inline-block;
+            width: 95px;
+            padding: 6px 12px;
+            background-color: rgb(29, 66, 167);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .custom-button:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+<style>
+    /* .dataTables_length {
+       margin-top: 40px;
+       margin-left: 150px;
+   }
+    */
+    .dataTables_length {
+        margin-top: 30px;
+    }
+       .dataTables_paginate {
+       text-align: center; /* center pagination controls */
+       margin-top: 40px; /* add margin to top of pagination controls */
+   }
+   div#myTable_info.dataTables_info{
+   margin-left:  145px;
+   margin-top:20px;
+   }
+   .dataTables_paginate .paginate_button {
+       padding: 5px 10px; /* adjust padding of pagination buttons */
+       margin: 0 5px; /* add margin between pagination buttons */
+       width:50px;
+       margin-right:150px;
+       margin-bottom:20px;
+       margin-top:20px;
+   }
+   .dataTables_paginate .paginate_button.current {
+       background-color: #fff; /* set background color of current page button */
+       color: black; /* set text color of current page button */
+       width:50px;
+   }
+   div.dataTables_filter input {
+
+       width: 130px;
+       margin-top:30px;
+       margin-bottom:40px;
+       margin-right:14px;
+       background:red;
+   }
+.dataTables_filter input {
+   width: 100px;
+   }
+   .dataTable {
+        border: 1px solid #ccc;
+    }
+   .dataTables_wrapper .dataTables_filter input{
+       width: 250px;
+   }
+
+   .dataTables_info {
+   margin-left: 100px;
+   }
+</style>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li style="margin-bottom: 30px;">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="car"></ion-icon>
+
+                        </span>
+                        <span class="title">CarRental Express</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/Manager">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('liste_reservations') }}">
+                        <span class="icon">
+                            <ion-icon name="clipboard-outline"></ion-icon>
+                        </span>
+                        <span class="title">Traitement des réservations</span>
+                    </a>
+                </li>
+
+                <li>
+                  <a href="/voitures">
+                      <span class="icon">
+                          <ion-icon name="car-outline"></ion-icon>
+                      </span>
+                      <span class="title">Car</span>
+                  </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('show_historique') }}">
+                        <span class="icon">
+                            <ion-icon name="time-outline"></ion-icon>
+                        </span>
+                        <span class="title">Historique</span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="/clients">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                        <span class="title">Clients</span>
+                    </a>
+                </li>
+
+
+
+
+
+                <li>
+                    <a href="{{ url_for('update_password') }}">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/logout">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Log Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+
+
+            </div>
+
+            <!-- ======================= Cards ================== -->
+
+            <div class="details" style="margin-left:-30px;">
+
+                    <div class="container2">
+
+                        <div style="margin-left: 120px;margin-top: 60px;" class="search-form">
+                            <form action="/voitures/search" method="POST">
+                                <label for="date_debut">Début :</label>
+                                <input type="date" id="date_debut" name="date_debut">
+
+                                <label for="date_fin">Fin :</label>
+                                <input type="date" id="date_fin" name="date_fin">
+
+                                <input  id="btn_rechercher" type="submit" value="Rechercher">
+                            </form>
+
+                            <div class="bay2" style="margin-top: -40px;">
+                                <a class="add-button" href="/voitures/add">  <button style="background-color: rgb(79, 230, 220);">Ajouter une voiture </button>
+                                </a>
+
+
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="products" id="table_voitures">
+                            {% for voiture in voitures %}
+                            <div class="product">
+                                <div class="image">
+                                    <img src="{{ url_for('static', filename='assets/images/earphone.png') }}" alt="">
+                                </div>
+                                <div class="namePrice">
+                                    <h3>{{ voiture.Nom }}</h3>
+                                    <span>$ {{ voiture.prix }}</span>
+                                </div>
+                                <p>{{ voiture.Marque }},{{ voiture.statut }}</p>
+                                <div class="stars">
+                                    <p>{{ voiture.date_dispo_debut }},{{ voiture.date_dispo_fin }}</p>
+                                </div>
+                                <div class="bay" style="margin-top: 60px;">
+
+
+                                    <a class="edit-button" href="/voitures/edit/{{ voiture._id|string }}"><button style="background-color: rgb(79, 230, 220);">Modifier </button></a>
+                                    <a class="delete-button" href="/voitures/delete/{{ voiture._id|string}}"><button style="background-color: rgb(218, 47, 50);">Supprimer </button></a>
+                                    <a class="reserve-button" href="/voitures/{{ voiture._id }}/reserve"><button>Réserver </button></a>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+                <!-- ================= New Customers ================ -->
+
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+
+
+    <!-- ====== ionicons ======= -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Script pour DataTables -->
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Fonction pour effectuer la requête AJAX de filtrage
+        function filtrerVoitures() {
+            var dateDebut = $('#date_debut').val();
+            var dateFin = $('#date_fin').val();
+
+            // Effectuer la requête AJAX
+            $.ajax({
+                url: '/voitures/search',
+                type: 'GET',
+                data: { date_debut: dateDebut, date_fin: dateFin },
+                success: function(response) {
+                    // Mettre à jour le contenu de la table avec les résultats de la recherche
+                    $('#table_voitures').html(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        // Écouter l'événement de clic sur le bouton de recherche
+        $('#btn_rechercher').click(function(e) {
+            e.preventDefault();
+            filtrerVoitures();
+        });
+    });
+</script>
+<script src="{{ url_for('static', filename='assets/js/main2.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/all.min.js') }}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

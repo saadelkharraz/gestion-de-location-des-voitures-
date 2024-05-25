@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        .custom-button {
+            display: inline-block;
+            width: 95px;
+            padding: 6px 12px;
+            background-color: rgb(29, 66, 167);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .custom-button:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-r from-gray-300 via-white to-gray-300 min-h-screen text-gray-800">
+    <div class="flex bg-gradient-to-r from-gray-300 via-white to-gray-300 min-h-screen">
+        <!-- Sidebar navigation -->
+        <div class="w-1/4 h-screen bg-gradient-to-r from-gray-500 to-gray-300 p-6 shadow-lg flex flex-col justify-between">
+            <ul class="space-y-10">
+                <li class="text-3xl mb-12">
+                    <a href="#" class="flex items-center text-gray-800 font-bold">
+                        <ion-icon name="car-sport-outline" class="text-4xl mr-3"></ion-icon>
+                        <span>CarRental Express</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Manager" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="home-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('liste_reservations') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="clipboard-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Traitement des réservations</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/voitures" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="car-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Car</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('show_historique') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="time-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Historique</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/clients" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="person-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Clients</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('update_password') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="lock-closed-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="log-out-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Log Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main content area -->
+        <div class="flex-1 p-10 bg-gradient-to-r from-gray-300 via-white to-gray-300">
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6 max-w-lg mx-auto">
+                <h1 class="text-2xl font-semibold mb-4">Modifier Voiture</h1>
+                <form action="/voitures/edit/{{ voiture._id }}" method="POST">
+                    <div class="mb-4">
+                        <label for="nom" class="block text-gray-700 font-semibold mb-2">Nom</label>
+                        <input type="text" name="nom" id="nom" value="{{ voiture.Nom }}" class="border rounded-lg p-2 w-full" required autofocus>
+                    </div>
+                    <div class="mb-4">
+                        <label for="marque" class="block text-gray-700 font-semibold mb-2">Marque</label>
+                        <input type="text" name="marque" id="marque" value="{{ voiture.Marque }}" class="border rounded-lg p-2 w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="statut" class="block text-gray-700 font-semibold mb-2">Statut</label>
+                        <input type="text" name="statut" id="statut" value="{{ voiture.statut }}" class="border rounded-lg p-2 w-full" readonly required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="prix" class="block text-gray-700 font-semibold mb-2">Prix par jour</label>
+                        <input type="number" name="prix" id="prix" value="{{ voiture.prix }}" class="border rounded-lg p-2 w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="date_debut" class="block text-gray-700 font-semibold mb-2">Début de disponibilité</label>
+                        <input type="date" name="date_debut" id="date_debut" value="{{ voiture.date_dispo_debut }}" class="border rounded-lg p-2 w-full" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="date_fin" class="block text-gray-700 font-semibold mb-2">Fin de disponibilité</label>
+                        <input type="date" name="date_fin" id="date_fin" value="{{ voiture.date_dispo_fin }}" class="border rounded-lg p-2 w-full" required>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="custom-button">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        const imgDiv = document.querySelector('.profile-box');
+        const img = document.querySelector('.profile-pic');
+        const file = document.querySelector('#profile');
+        const uploadBtn = document.querySelector('#uploadBtn');
+
+        imgDiv.addEventListener('mouseenter', function() {
+            uploadBtn.style.display = "block";
+        });
+
+        imgDiv.addEventListener('mouseleave', function() {
+            uploadBtn.style.display = "none";
+        });
+
+        file.addEventListener('change', function() {
+            const choosedFile = this.files[0];
+            if (choosedFile) {
+                const reader = new FileReader();
+                reader.addEventListener('load', function() {
+                    img.setAttribute('src', reader.result);
+                });
+                reader.readAsDataURL(choosedFile);
+            }
+        });
+    </script>
+</body>
+
+</html>

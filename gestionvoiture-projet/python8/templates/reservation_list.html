@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations</title>
+    <!-- ======= Styles ====== -->
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Stylesheet pour DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <!-- External Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" nomodule></script>
+    <style>
+        .custom-button {
+            display: inline-block;
+            width: 95px;
+            padding: 6px 12px;
+            background-color: #d5636e;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .custom-button:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- =============== Navigation ================ -->
+    <div class="flex">
+        <!-- Navigation Sidebar -->
+         <div class="w-1/4 h-screen bg-gradient-to-r from-gray-500 to-gray-300 p-6 shadow-lg flex flex-col justify-between">
+    <ul class="space-y-10">
+        <li class="text-3xl mb-12">
+            <a href="#" class="flex items-center text-gray-800 font-bold">
+                <ion-icon name="car-sport-outline" class="text-4xl mr-3"></ion-icon>
+                <span>KRILIYA</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('manager_dash') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="grid-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('liste_reservations') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="document-text-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Reservations</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('voitures_encours_reservation') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="checkmark-circle-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Ongoing Rentals</span>
+            </a>
+        </li>
+        <li>
+            <a href="/voitures" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="car-sport-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Cars</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('show_historique') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="time-outline" class="text-3xl mr-3"></ion-icon>
+                <span>History</span>
+            </a>
+        </li>
+        <li>
+            <a href="/clients" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="people-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Clients</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('update_password') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="lock-closed-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Password</span>
+            </a>
+        </li>
+        <li>
+            <a href="/logout" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="log-out-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Log Out</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="w-3/4 p-5 bg-gray-300">
+            <div class="flex justify-between items-center mb-5">
+                <div>
+                    <button class="text-2xl">
+
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="bg-gradient-to-r from-gray-300 via-white to-gray-300 p-5 rounded-lg shadow-md mb-5">
+                <h1 class="text-xl flex items-center font-semibold">Liste des Réservations</h1>
+            </div>
+
+            <!-- Card Section -->
+            <div class="bg-gradient-to-r from-gray-300 via-white to-gray-300 p-5 rounded-lg shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {% for reservation in reservations %}
+                    <div class="bg-white p-5 rounded-lg shadow-lg relative">
+                        <h3 class="text-lg font-semibold">{{ reservation["clients"]["nom"] }} {{ reservation["clients"]["prenom"] }}</h3>
+                        <p class="text-gray-700">CIN: {{ reservation["cin_client"] }}</p>
+                        <p class="text-gray-700">Voiture: {{ reservation["voiture"]["Nom"] }}</p>
+                        <p class="text-gray-700">Prix: {{ reservation["voiture"]["prix"] }}</p>
+                        <div class="flex justify-between mt-4">
+                            <a href="{{ url_for('accepter_reservation', reservation_id=reservation['_id']|string) }}" class="custom-button" style="background-color: #181c1c;">Accepter</a>
+                            <a onclick="showConfirmationAlert(event)" style="width: 95px;" href="{{ url_for('refuser_reservation', reservation_id=reservation['_id']|string) }}" class="custom-button">Refuser</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="confirmationModal" style="display: none;">
+        <div class="relative top-1/4 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Confirmation</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">Êtes-vous sûr de vouloir refuser cette réservation ?</p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button class="bg-gray-500 text-white px-4 py-2 rounded-md focus:outline-none" id="cancelButton">Annuler</button>
+                    <form id="deleteForm" method="POST" class="inline">
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md focus:outline-none" onclick="confirmDelete()">Refuser</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function showConfirmationAlert(event) {
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+
+            Swal.fire({
+                title: 'Confirmation',
+                text: 'Êtes-vous sûr de vouloir refuser cette réservation ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Oui',
+                cancelButtonText: 'Non',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Le code à exécuter lorsque l'utilisateur clique sur "Oui"
+                    window.location.href = event.target.href;
+                    // window.location.href = "{{ url_for('liste_reservations') }}"; // Redirige vers le lien original
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50, 100],
+                language: {
+                    "emptyTable": "Aucun enregistrement trouvé",
+                    "info": "Affichage de START à END sur TOTAL entrées", /* set custom text for info */
+                    "paginate": {
+                        "next": "Suivant", /* set text for "Next" button */
+                        "previous": "Précédent", /* set text for "Previous" button */
+                    },
+                    search: "",
+                    // lengthMenu: "Afficher MENU contact",
+                    searchPlaceholder: "Cherchez une réservation spécifique" // add placeholder text
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

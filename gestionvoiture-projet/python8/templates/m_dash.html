@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location de voiture</title>
+    <!-- Tailwind CSS Link -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.11/dist/tailwind.min.css" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body class="bg-gradient-to-r from-gray-300 via-white to-gray-300 min-h-screen text-gray-800">
+    <div class="flex">
+        <!-- Sidebar navigation -->
+         <div class="w-1/4 h-screen bg-gradient-to-r from-gray-500 to-gray-300 p-6 shadow-lg flex flex-col justify-between">
+    <ul class="space-y-10">
+        <li class="text-3xl mb-12">
+            <a href="#" class="flex items-center text-gray-800 font-bold">
+                <ion-icon name="car-sport-outline" class="text-4xl mr-3"></ion-icon>
+                <span>KRILIYA</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('manager_dash') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="grid-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('liste_reservations') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="document-text-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Reservations</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('voitures_encours_reservation') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="checkmark-circle-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Ongoing Rentals</span>
+            </a>
+        </li>
+        <li>
+            <a href="/voitures" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="car-sport-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Cars</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('show_historique') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="time-outline" class="text-3xl mr-3"></ion-icon>
+                <span>History</span>
+            </a>
+        </li>
+        <li>
+            <a href="/clients" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="people-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Clients</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('update_password') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="lock-closed-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Password</span>
+            </a>
+        </li>
+        <li>
+            <a href="/logout" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                <ion-icon name="log-out-outline" class="text-3xl mr-3"></ion-icon>
+                <span>Log Out</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+        <!-- Main content area -->
+        <div class="flex-1 p-10  bg-gradient-to-r from-gray-300 via-white to-gray-300">
+            <div class="flex-1 p-10">
+            <div class="bg-gradient-to-r from-black-300 via-white to-black-300 p-5 rounded-lg shadow-md mb-5">
+             <h1 class="text-xl flex items-center space-x-2 font-semibold">Reservations</h1>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card for Reservations Pending -->
+                <div class="bg-gradient-to-r from-blue-300 via-white to-blue-300 rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-blue-500">{{ nombre_reservations_en_attente }}</div>
+                            <p class="text-gray-500">Pending</p>
+                        </div>
+                        <ion-icon name="document-text-outline" size="large" class="text-blue-400"></ion-icon>
+                    </div>
+                    <div class="mt-4 text-right">
+                <a href="{{ url_for('liste_reservations') }}">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none">
+                        View
+                    </button>
+                </a>
+            </div>
+                </div>
+                <!-- Card for Reservations Accepted -->
+                <div class="bg-gradient-to-r from-green-300 via-white to-green-300 rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-green-500">{{ nombre_reservations_acceptees }}</div>
+                            <p class="text-gray-500">Accepted</p>
+                        </div>
+                        <ion-icon name="checkmark-circle-outline" size="large" class="text-green-400"></ion-icon>
+                    </div>
+                    <div class="mt-4 text-right">
+                <a href="{{ url_for('show_historique') }}">
+                    <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none">
+                        View
+                    </button>
+                </a>
+            </div>
+                </div>
+                <!-- Card for Reservations Refused -->
+                <div class="bg-gradient-to-r from-red-300 via-white to-red-300 rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-red-500">{{ nombre_reservations_refuses }}</div>
+                            <p class="text-gray-500">Refused</p>
+                        </div>
+                        <ion-icon name="close-circle-outline" size="large" class="text-red-400"></ion-icon>
+                    </div>
+                    <div class="mt-4 text-right">
+                <a href="{{ url_for('show_historique') }}">
+                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none">
+                        View
+                    </button>
+                </a>
+            </div>
+                </div>
+
+
+            </div> </div>
+<div class="flex-1 p-10">
+
+                 <div class="bg-gradient-to-r from-black-300 via-white to-black-300 p-5 rounded-lg shadow-md mb-5">
+    <h1 class="text-xl flex fle font-semibold">Resources</h1>
+</div>
+
+
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+
+
+                <!-- Card for Number of Clients -->
+                <div class="bg-gradient-to-r from-indigo-300 via-white to-indigo-300 rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-indigo-500">{{ nombre_clients }}</div>
+                            <p class="text-gray-500">Clients</p>
+                        </div>
+                        <ion-icon name="people-circle" size="large" class="text-indigo-400"></ion-icon>
+                    </div>
+                    <div class="mt-4 text-right">
+                <a href="/clients">
+                    <button class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 focus:outline-none">
+                        View
+                    </button>
+                </a>
+            </div>
+                </div>
+                <!-- Card for Available Cars -->
+                <div class="bg-gradient-to-r from-yellow-300 via-white to-yellow-300 rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-yellow-500">{{ nombre_voitures }}</div>
+                            <p class="text-gray-500">Available Cars</p>
+                        </div>
+                        <ion-icon name="car-sport-outline" size="large" class="text-yellow-400"></ion-icon>
+                    </div>
+                    <div class="mt-4 text-right">
+                <a href="/voitures">
+                    <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none">
+                        View
+                    </button>
+                </a>
+            </div>
+                </div>
+                <!-- Card for Total Cars -->
+                <div class="bg-gradient-to-r from-purple-300 via-white to-purple-300 rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-purple-500">{{ nombre_voitures_total }}</div>
+                            <p class="text-gray-500">Totale Cars</p>
+                        </div>
+                        <ion-icon name="car-sport-outline" size="large" class="text-purple-400"></ion-icon>
+                    </div>
+                    <div class="mt-4 text-right">
+                <a href="/voitures">
+                    <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 focus:outline-none">
+                        View
+                    </button>
+                </a>
+            </div>
+                </div>
+            </div>
+</div>
+        </div>
+
+    </div>
+
+    <!-- Ionicons Script for Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.0/dist/ionicons.js"></script>
+</body>
+</html>

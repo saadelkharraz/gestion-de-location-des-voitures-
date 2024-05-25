@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD USER</title>
+    <!-- ======= Styles ====== -->
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Stylesheet pour DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <!-- External Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/53d355143f.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-100">
+    <!-- =============== Navigation ================ -->
+    <div class="flex">
+        <!-- Navigation Sidebar -->
+        <div class="w-1/4 min-h-screen bg-gradient-to-r from-blue-400 to-blue-100 p-5 shadow-lg">
+            <ul class="space-y-16">
+                <li class="text-3xl mb-12">
+                    <a href="#" class="flex items-center text-gray-800 font-bold">
+                        <ion-icon name="car-sport-outline" class="text-4xl mr-3"></ion-icon>
+                        <span>KRILIYA</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin') }}" class="flex items-center text-gray-700 hover:text-gray-900 font-medium space-x-2">
+                        <ion-icon name="grid-outline" class="text-3xl mr-2"></ion-icon>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admins" class="flex items-center text-gray-700 hover:text-gray-900 font-medium space-x-2">
+                        <ion-icon name="people-outline" class="text-3xl mr-2"></ion-icon>
+                        <span>Admins</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/managers" class="flex items-center text-gray-700 hover:text-gray-900 font-medium space-x-2">
+                        <ion-icon name="people-outline" class="text-3xl mr-2"></ion-icon>
+                        <span>Managers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('edit_mon_compte') }}" class="flex items-center text-gray-700 hover:text-gray-900 font-medium space-x-2">
+                        <ion-icon name="person-outline" class="text-3xl mr-2"></ion-icon>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('update_password') }}" class="flex items-center text-gray-700 hover:text-gray-900 font-medium space-x-2">
+                        <ion-icon name="lock-closed-outline" class="text-3xl mr-2"></ion-icon>
+                        <span>Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout" class="flex items-center text-gray-700 hover:text-gray-900 font-medium space-x-2">
+                        <ion-icon name="log-out-outline" class="text-3xl mr-2"></ion-icon>
+
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="w-3/4 p-5 bg-blue-100">
+            <div class="flex justify-between items-center mb-5">
+                <div>
+
+                </div>
+                <a href="/logout" class="flex items-center text-gray-700 hover:text-gray-900 font-medium space-x-2">
+                        <ion-icon name="log-out-outline" class="text-3xl mr-2"></ion-icon>
+
+                    </a>
+            </div>
+
+            <!-- Alert for success message -->
+            {% if success %}
+            <script>
+                if ("{{ success }}" !== "") {
+                    document.addEventListener("DOMContentLoaded", function(event) {
+                        swal({
+                            title: "Succès",
+                            text: "{{ success }}",
+                            icon: "success",
+                            button: "OK"
+                        });
+                    });
+                }
+            </script>
+            {% endif %}
+
+            <!-- Title Container -->
+
+            <!-- Form Section -->
+            <div class="bg-blue-400 p-5 rounded-lg shadow-md mb-5 max-w-md mx-auto">
+            <div class="bg-gradient-to-r from-blue-200 to-blue-100 p-5 rounded-lg shadow-md mb-5">
+                <h1 class="text-xl font-semibold">Ajouter Admin/Manager</h1>
+            </div>
+
+                {% if error %}
+                <div class="alert alert-danger mb-5">
+                    <p style="font-size: 12px; margin-bottom: 0px;">{{ error }}</p>
+                </div>
+                {% endif %}
+                <form action="{{ url_for('addUser') }}" method="post">
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="user-input-box">
+                            <label for="fullName" class="block text-gray-700">Nom</label>
+                            <input type="text" id="fullName" name="nom" placeholder="Enter Nom" class="border p-2 rounded w-full" />
+                        </div>
+                        <div class="user-input-box">
+                            <label for="username" class="block text-gray-700">Prenom</label>
+                            <input type="text" id="username" name="prenom" placeholder="Enter Prenom" class="border p-2 rounded w-full" />
+                        </div>
+                        <div class="user-input-box">
+                            <label for="email" class="block text-gray-700">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Enter Email" class="border p-2 rounded w-full" />
+                        </div>
+                        <div class="user-input-box">
+                            <label for="phoneNumber" class="block text-gray-700">Numero telephone</label>
+                            <input type="text" id="phoneNumber" name="telephone" placeholder="Enter Numero telephone" class="border p-2 rounded w-full" />
+                        </div>
+                        <div class="user-input-box">
+                            <label for="cin" class="block text-gray-700">CIN</label>
+                            <input type="text" id="cin" name="cin" placeholder="Enter CIN" class="border p-2 rounded w-full" />
+                        </div>
+                        <div class="user-input-box">
+                            <label for="password" class="block text-gray-700">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Entrer Password" class="border p-2 rounded w-full" />
+                        </div>
+                    </div>
+                    <div class="gender-details-box mt-4">
+                        <span class="gender-title block text-gray-700">Role</span>
+                        <div class="flex items-center space-x-4 mt-2">
+                            <div>
+                                <input type="radio" name="role" id="admin" value="admin" class="mr-2">
+                                <label for="admin" class="text-gray-700">Admin</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="role" id="manager" value="manager" class="mr-2">
+                                <label for="manager" class="text-gray-700">Manager</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-submit-btn mt-4">
+                        <input type="submit" value="Ajouter" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script>
+        function showConfirmationModal(adminId) {
+            $('#confirmationModal').show();
+            $('#deleteForm').attr('action', '/delete-admin/' + adminId);
+        }
+
+        $('#cancelButton').on('click', function() {
+            $('#confirmationModal').hide();
+        });
+
+        function confirmDelete() {
+            $('#deleteForm').submit();
+        }
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

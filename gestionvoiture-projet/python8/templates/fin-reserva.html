@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ======= Styles ====== -->
+    <!-- Stylesheet pour DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style4.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/all.min.css') }}">
+
+    <style>
+        .custom-button {
+            display: inline-block;
+            width: 95px;
+            padding: 6px 12px;
+            background-color: rgb(29, 66, 167);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .custom-button:hover {
+            background-color: black;
+        }
+
+        .card-image {
+            height: 200px;
+            width: 100%;
+            border: 2px solid black;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="flex">
+        <div class="w-1/4 h-screen bg-gradient-to-r from-gray-500  to-gray-300  p-6 shadow-lg flex flex-col justify-between">
+            <ul class="space-y-10">
+                <li class="text-3xl mb-12">
+                    <a href="#" class="flex items-center text-gray-800 font-bold">
+                        <ion-icon name="car-sport-outline" class="text-4xl mr-3"></ion-icon>
+                        <span>KRILIYA</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="grid-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('liste_reservations') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="document-text-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Reservations</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('voitures_encours_reservation') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="checkmark-circle-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Ongoing Rentals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/voitures" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="car-sport-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Cars</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('show_historique') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="time-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/clients" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="people-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Clients</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('update_password') }}" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="lock-closed-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout" class="flex items-center text-gray-800 hover:text-gray-900 font-semibold space-x-3">
+                        <ion-icon name="log-out-outline" class="text-3xl mr-3"></ion-icon>
+                        <span>Log Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="w-3/4 p-10 bg-gradient-to-r from-gray-300  to-gray-100">
+            <div class="bg-gradient-to-r from-gray-300 via-white to-gray-300 p-5 rounded-lg shadow-md mb-5">
+                <h1 class="text-xl font-semibold">Rented  Cars</h1>
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for voiture in voitures %}
+                <div class="bg-gradient-to-r from-gray-300 via-white to-gray-300  p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                    <div class="card-image mb-4">
+                        <img src="{{ url_for('static', filename=voiture.photo) }}" alt="Car Image">
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">{{ voiture.Nom }}</h3>
+                    <p class="text-green-500 mb-1"><strong>Price:</strong> ${{ voiture.prix }}</p>
+                    <p class="text-gray-700 mb-1"><strong>Brand:</strong> {{ voiture.Marque }}</p>
+                    <p class="text-gray-700 mb-1"><strong>Status:</strong> {{ voiture.statut }}</p>
+                    <p class="text-red-300 mb-1"><strong>Available From:</strong> {{ voiture.date_dispo_debut }}</p>
+                    <p class="text-red-300 mb-1"><strong>Available Until:</strong> {{ voiture.date_dispo_fin }}</p>
+                    <div class="mt-4 text-right">
+                        <a href="/terminer_reservation/{{ voiture._id|string }}">
+                            <button class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none">End Reservation</button>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/main2.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/all.min.js') }}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to perform the AJAX request for filtering cars
+            function filterCars() {
+                var startDate = $('#start_date').val();
+                var endDate = $('#end_date').val();
+
+                // Perform the AJAX request
+                $.ajax({
+                    url: '/cars/search',
+                    type: 'GET',
+                    data: { start_date: startDate, end_date: endDate },
+                    success: function(response) {
+                        // Update the content of the table with the search results
+                        $('#table_cars').html(response);
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            // Listen for the click event on the search button
+            $('#btn_search').click(function(e) {
+                e.preventDefault();
+                filterCars();
+            });
+        });
+    </script>
+</body>
+
+</html>

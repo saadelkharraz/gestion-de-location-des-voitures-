@@ -1,0 +1,28 @@
+{% for voiture in voitures %}
+<div class="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300 ease-in-out">
+    <div class="image mb-4 bg-white p-4 rounded">
+        <img src="{{ url_for('static', filename=voiture.photo) }}" alt="Car Image" class="w-full h-32 object-cover rounded">
+    </div>
+    <div class="namePrice flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold">{{ voiture.Nom }}</h3>
+        <span class="text-blue-500 font-bold">${{ voiture.prix }}</span>
+    </div>
+    <p class="text-gray-500 mb-2">{{ voiture.Marque }}, {{ voiture.statut }}</p>
+    <p class="text-gray-500 mb-4">{{ voiture.date_dispo_debut }}, {{ voiture.date_dispo_fin }}</p>
+    <div class="flex space-x-2">
+        <a class="edit-button" href="/voitures/edit/{{ voiture._id }}" title="Modifier">
+            <ion-icon name="pencil-outline" size="large" class="text-blue-500 hover:text-blue-700"></ion-icon>
+        </a>
+        <a class="delete-button" href="/voitures/delete/{{ voiture._id }}" title="Supprimer">
+            <ion-icon name="trash-outline" size="large" class="text-red-500 hover:text-red-700"></ion-icon>
+        </a>
+        {% if voiture.statut != 'reserve' %}
+        <a class="reserve-button" href="/voitures/{{ voiture._id }}/reserve" title="Réserver">
+            <ion-icon name="checkmark-circle-outline" size="large" class="text-yellow-500 hover:text-yellow-700"></ion-icon>
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+<p>Aucune voiture trouvée pour ce filtre.</p>
+{% endfor %}
